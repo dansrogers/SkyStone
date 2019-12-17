@@ -4,6 +4,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import teamcode.common.Coordinates;
+import teamcode.common.Debug;
 import teamcode.common.Vector2D;
 
 /**
@@ -24,7 +29,6 @@ public class GPS {
     private double prevLeftVerticalPos, prevRightVerticalPos, prevHorizontalPos;
 
     public GPS(HardwareMap hardwareMap, Vector2D currentPosition, double currentBearing) {
-        active = true;
         this.position = currentPosition;
         this.rotation = bearingToRadians(currentBearing);
         leftVertical = hardwareMap.dcMotor.get(Constants.LEFT_VERTICAL_ODOMETER);
@@ -35,15 +39,6 @@ public class GPS {
         prevHorizontalPos = 0;
         correctDirections();
         resetEncoders();
-        Thread positionUpdater = new Thread() {
-            @Override
-            public void run() {
-                while (active) {
-                    updateLocation();
-                }
-            }
-        };
-        positionUpdater.start();
     }
 
     private void correctDirections() {
@@ -58,7 +53,7 @@ public class GPS {
         horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    private void updateLocation() {
+    public void updateCoordinates() {
         double leftVerticalPos = leftVertical.getCurrentPosition();
         double rightVerticalPos = rightVertical.getCurrentPosition();
         double deltaLeftVertical = leftVerticalPos - prevLeftVerticalPos;
@@ -83,9 +78,21 @@ public class GPS {
         prevHorizontalPos = horizontalPos;
     }
 
+    public void logCoordinates() {
+        Debug.log(this.getCoordinates().toString());
+    }
+
     public Vector2D getPosition() {
         // clone so that position can not be externally modified
         return position.clone();
+    }
+
+    /**
+     * Returns the coordinates describing the robot's position and orientation
+     * relative to the starting coordinates.
+     */
+    public Coordinates getCoordinates() {
+        return new Coordinates(this.position.getX(), this.position.getY(), 0, 0, 0, this.rotation);
     }
 
     /**
@@ -109,12 +116,4 @@ public class GPS {
     private double bearingToRadians(double bearing) {
         return bearing;
     }
-
-    /**
-     * Invoke this in AbstractOpMode.onStop().
-     */
-    public void shutdown() {
-        active = false;
-    }
-
 }
