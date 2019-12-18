@@ -11,6 +11,8 @@ public class Constants {
     public static final String RIGHT_VERTICAL_ODOMETER = "RightVerticalOdometer";
     public static final String HORIZONTAL_ODOMETER = "HorizontalOdometer";
 
+    public static final double TICKS_PER_REVOLUTION = 8192;
+
     public static final double DRIVE_OFFSET_TOLERANCE_INCHES = 5000;
     public static final double DRIVE_OFFSET_TOLERANCE_DEGREES = 20;
     public static final double HORIZONTAL_ODOMETER_DEGREES_TO_TICKS = 130;
