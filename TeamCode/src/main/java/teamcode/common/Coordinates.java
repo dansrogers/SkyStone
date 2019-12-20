@@ -7,6 +7,7 @@ public class Coordinates {
     private double pitch; // measures rotation about the x-axis in radians
     private double roll; // measures rotation about the y-axis in radians
     private double yaw; // measures rotation about the z-axis in radians
+    private long timestampMs; // the timestamp in milliseconds when the robot was measured to be in this state
 
     /**
      * Creates a new instance of the Coordinates class used to keep track
@@ -19,6 +20,7 @@ public class Coordinates {
         this.pitch = 0;
         this.roll = 0;
         this.yaw = 0;
+        this.timestampMs = System.currentTimeMillis();
     }
 
     /**
@@ -32,6 +34,7 @@ public class Coordinates {
         this.pitch = c.pitch;
         this.roll = c.roll;
         this.yaw = c.yaw;
+        this.timestampMs = c.timestampMs;
     }
 
     /**
@@ -43,14 +46,16 @@ public class Coordinates {
      * @param pitch The rotation value about the x-axis in radians.
      * @param roll The rotation value about the y-axis in radians.
      * @param yaw The rotation value about the z-axis in radians.
+     * @param timestampMs The timestamp in milliseconds when the robot was measured to be in this state.
      */
-    public Coordinates(double x, double y, double z, double pitch, double roll, double yaw) {
+    public Coordinates(double x, double y, double z, double pitch, double roll, double yaw, long timestampMs) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.pitch = pitch;
         this.roll = roll;
         this.yaw = yaw;
+        this.timestampMs = timestampMs;
     }
 
     /**
@@ -149,14 +154,31 @@ public class Coordinates {
         this.yaw = yaw;
     }
 
+    /**
+     * Gets the timestamp in milliseconds when the robot was measured to be in this state.
+     * @return The timestamp in milliseconds when the robot was measured to be in this state.
+     */
+    public double getTimestampMs() {
+        return this.timestampMs;
+    }
+
+    /**
+     * Sets the timestamp in milliseconds when the robot was measured to be in this state.
+     * @param timestampMs The timestamp in milliseconds when the robot was measured to be in this state.
+     */
+    public void setTimestampMs(long timestampMs) {
+        this.timestampMs = timestampMs;
+    }
+
     @Override
     public String toString() {
-        return String.format("x=%.1f, y=%.1f, z=%1.f, pitch=%.1f, roll=%.1f, yaw=%.1f",
+        return String.format("x=%.1f, y=%.1f, z=%1.f, pitch=%.1f, roll=%.1f, yaw=%.1f, timestampMs=%d",
                 this.x,
                 this.y,
                 this.z,
                 this.pitch,
                 this.roll,
-                this.yaw);
+                this.yaw,
+                this.timestampMs);
     }
 }

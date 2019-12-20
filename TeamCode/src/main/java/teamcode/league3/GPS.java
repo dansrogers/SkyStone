@@ -41,28 +41,33 @@ public class GPS {
     }
 
     public void updateCoordinates() {
-        double leftOdoTicks = leftOdo.getCurrentPosition();
-        double rightOdoTicks = rightOdo.getCurrentPosition();
-        double deltaLeftOdoTicks = leftOdoTicks - prevLeftOdoTicks;
-        double deltaRightOdoTicks = rightOdoTicks - prevRightOdoTicks;
-        
-        double deltaRot = (deltaLeftOdoTicks - deltaRightOdoTicks) / Constants.VERTICAL_ODOMETER_SEPARATION_DISTANCE;
-        rotation += deltaRot;
+        //velocity_right = w(RADIUS_OF_ARC_TO_DRIVE + WHEEL_BASE/2)
+        //velocity_left = w(RADIUS_OF_ARC_TO_DRIVE – WHEEL_BASE/2)
+        //w = (velocity_right-velocity_left)/WHEEL_BASE
 
-        double horizontalPos = horizontalOdo.getCurrentPosition();
-        double deltaHorizontal = horizontalPos - prevHorizontalOdoTicks - deltaRot * Constants.HORIZONTAL_ODOMETER_DEGREES_TO_TICKS;
+        //long currTime = System.currentTimeMillis();
+        //double leftOdoTicks = leftOdo.getCurrentPosition();
+        //double rightOdoTicks = rightOdo.getCurrentPosition();
+        //double deltaLeftOdoTicks = leftOdoTicks - prevLeftOdoTicks;
+        //double deltaRightOdoTicks = rightOdoTicks - prevRightOdoTicks;
 
-        double p = (deltaLeftOdoTicks + deltaRightOdoTicks) / 2;
-        double n = deltaHorizontal;
+        //double deltaRot = (deltaLeftOdoTicks - deltaRightOdoTicks) / Constants.VERTICAL_ODOMETER_SEPARATION_DISTANCE;
+        //rotation += deltaRot;
 
-        double x = position.getX() + p * Math.sin(rotation) + n * Math.cos(rotation);
-        double y = position.getY() + p * Math.cos(rotation) - n * Math.sin(rotation);
-        position.setX(x);
-        position.setY(y);
+        //double horizontalPos = horizontalOdo.getCurrentPosition();
+        //double deltaHorizontal = horizontalPos - prevHorizontalOdoTicks - deltaRot * Constants.HORIZONTAL_ODOMETER_DEGREES_TO_TICKS;
 
-        prevLeftOdoTicks = leftOdoTicks;
-        prevRightOdoTicks = rightOdoTicks;
-        prevHorizontalOdoTicks = horizontalPos;
+        //double p = (deltaLeftOdoTicks + deltaRightOdoTicks) / 2;
+        //double n = deltaHorizontal;
+
+        //double x = position.getX() + p * Math.sin(rotation) + n * Math.cos(rotation);
+        //double y = position.getY() + p * Math.cos(rotation) - n * Math.sin(rotation);
+        //position.setX(x);
+        //position.setY(y);
+
+        //prevLeftOdoTicks = leftOdoTicks;
+        //prevRightOdoTicks = rightOdoTicks;
+        ///prevHorizontalOdoTicks = horizontalPos;
     }
 
     public void logCoordinates() {

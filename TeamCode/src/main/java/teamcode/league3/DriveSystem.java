@@ -26,13 +26,13 @@ public class DriveSystem {
     }
 
     public void vertical(double inches, double power) {
-        Vector2D currentPosition = gps.getPosition();
-        double currentRotation = gps.getRotation();
-        Vector2D translation = Vector2D.fromAngleMagnitude(currentRotation, inches);
-        Vector2D target = currentPosition.add(translation);
-        continuous(Vector2D.forward().multiply(power), 0);
-        while (!nearTargetPosition(target, currentRotation)) ;
-        brake();
+        //Vector2D currentPosition = gps.getPosition();
+        //double currentRotation = gps.getRotation();
+        //Vector2D translation = Vector2D.fromAngleMagnitude(currentRotation, inches);
+        //Vector2D target = currentPosition.add(translation);
+        //continuous(Vector2D.forward().multiply(power), 0);
+        //while (!nearTargetPosition(target, currentRotation)) ;
+        //brake();
     }
 
     public void lateral(double inches, double power) {
@@ -40,19 +40,19 @@ public class DriveSystem {
     }
 
     public void rotate(double degrees, double power) {
-        double radians = Math.toRadians(degrees);
-        double currentRotation = gps.getRotation();
-        double turnAngle = radians - currentRotation;
+        //double radians = Math.toRadians(degrees);
+        //double currentRotation = gps.getRotation();
+        //double turnAngle = radians - currentRotation;
     }
 
     public void goTo(Vector2D targetPosition, double power) {
-        Vector2D currentPos = gps.getPosition();
-        double currentRot = gps.getRotation();
-        Vector2D translation = targetPosition.subtract(currentPos);
-        double turnAngle = translation.getDirection() - currentRot;
-        double distance = translation.magnitude();
-        rotate(Math.toDegrees(turnAngle), power);
-        vertical(distance, power);
+        //Vector2D currentPos = gps.getPosition();
+        //double currentRot = gps.getRotation();
+        //Vector2D translation = targetPosition.subtract(currentPos);
+        //double turnAngle = translation.getDirection() - currentRot;
+        //double distance = translation.magnitude();
+        //rotate(Math.toDegrees(turnAngle), power);
+        //vertical(distance, power);
     }
 
     public void continuous(Vector2D velocity, double turnSpeed) {
@@ -81,13 +81,14 @@ public class DriveSystem {
     }
 
     private boolean nearTargetPosition(Vector2D targetPosition, double targetRotation) {
-        Vector2D currentPosition = gps.getPosition();
-        Vector2D positionOffset = targetPosition.subtract(currentPosition);
-        double currentRotation = gps.getRotation();
-        double rotationOffset = targetRotation - currentRotation;
-        return positionOffset.getX() < Constants.DRIVE_OFFSET_TOLERANCE_INCHES &&
-                positionOffset.getY() < Constants.DRIVE_OFFSET_TOLERANCE_INCHES &&
-                Math.toDegrees(rotationOffset) < Constants.DRIVE_OFFSET_TOLERANCE_DEGREES;
+        //Vector2D currentPosition = gps.getPosition();
+        //Vector2D positionOffset = targetPosition.subtract(currentPosition);
+        //double currentRotation = gps.getRotation();
+        //double rotationOffset = targetRotation - currentRotation;
+        //return positionOffset.getX() < Constants.DRIVE_OFFSET_TOLERANCE_INCHES &&
+        //        positionOffset.getY() < Constants.DRIVE_OFFSET_TOLERANCE_INCHES &&
+        //        Math.toDegrees(rotationOffset) < Constants.DRIVE_OFFSET_TOLERANCE_DEGREES;
+        return true;
     }
 
 }

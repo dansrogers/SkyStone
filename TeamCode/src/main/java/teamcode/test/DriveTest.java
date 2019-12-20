@@ -1,6 +1,7 @@
 package teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import teamcode.common.AbstractOpMode;
 import teamcode.common.Debug;
@@ -9,6 +10,7 @@ import teamcode.common.Vector2D;
 import teamcode.league3.DriveSystem;
 import teamcode.league3.GPS;
 
+@Disabled
 @Autonomous(name = "Drive Test")
 public class DriveTest extends AbstractOpMode {
 
@@ -20,7 +22,7 @@ public class DriveTest extends AbstractOpMode {
     @Override
     protected void onInitialize() {
         Debug.log("onInitialize 1");
-        gps = new GPS(hardwareMap, Vector2D.zero(), Math.PI);
+        //gps = new GPS(hardwareMap, Vector2D.zero(), Math.PI);
         driveSystem = new DriveSystem(hardwareMap, gps);
 
         Debug.log("onInitialize 2");
