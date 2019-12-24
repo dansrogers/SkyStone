@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+
 import teamcode.common.Vector2D;
 
 /**
@@ -22,10 +23,13 @@ public class GPS {
     private double rotation;
     private final DcMotor leftVertical, rightVertical, horizontal;
     private double prevLeftVerticalPos, prevRightVerticalPos, prevHorizontalPos;
+    private long lastUpdateTime;
 
-    public GPS(HardwareMap hardwareMap, Vector2D currentPosition, double currentBearing) {
+
+    public GPS(HardwareMap hardwareMap, Vector2D currentPosition, double currentDirection) {
         active = true;
         this.position = currentPosition;
+        this.rotation = currentDirection;
         leftVertical = hardwareMap.dcMotor.get(Constants.LEFT_VERTICAL_ODOMETER);
         rightVertical = hardwareMap.dcMotor.get(Constants.RIGHT_VERTICAL_ODOMETER);
         horizontal = hardwareMap.dcMotor.get(Constants.HORIZONTAL_ODOMETER);
@@ -38,6 +42,7 @@ public class GPS {
             @Override
             public void run() {
                 while (active) {
+                    //updateArcBasedLocation();
                     updateLocation();
                 }
             }
@@ -57,7 +62,13 @@ public class GPS {
         horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    private void updateLocation() {
+
+
+
+
+
+
+    private synchronized void updateLocation() {
         double leftVerticalPos = leftVertical.getCurrentPosition();
         double rightVerticalPos = rightVertical.getCurrentPosition();
         double deltaLeftVertical = leftVerticalPos - prevLeftVerticalPos;
@@ -82,17 +93,20 @@ public class GPS {
         prevHorizontalPos = horizontalPos;
     }
 
-    public Vector2D getPosition() {
-        // clone so that position can not be externally modified
-        return position.clone();
+    /**
+     * Returns the position of the robot as read by the odometers. In inches
+     */
+    public synchronized Vector2D getPosition() {
+        return position.multiply(1 / Constants.ODOMETER_INCHES_TO_TICKS);
     }
 
     /**
-     * Returns the robot's bearing in degrees.
+     * Returns the rotation in radians, unit circle style.
      */
-    public double getRotation() {
-        return radiansToBearing(rotation);
+    public synchronized double getRotation() {
+        return rotation;
     }
+
 
     private double radiansToBearing(double radians) {
         return 0;

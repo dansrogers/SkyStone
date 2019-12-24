@@ -44,4 +44,29 @@ public class Constants {
     public static final double TOLERANCE_X = 0.1 ;
     public static final double TOLERANCE_Y = 0.1;
     public static final double ODOMETRY_DISTANCE_TO_CENTER = 4.405;
+
+    public static final String FRONT_LEFT_DRIVE_NAME = "FrontLeftDrive";
+    public static final String FRONT_RIGHT_DRIVE_NAME = "FrontRightDrive";
+    public static final String REAR_LEFT_DRIVE_NAME = "RearLeftDrive";
+    public static final String REAR_RIGHT_DRIVE_NAME = "RearRightDrive";
+    public static final String LEFT_VERTICAL_ODOMETER_NAME = "LeftVerticalOdometer";
+    public static final String RIGHT_VERTICAL_ODOMETER_NAME = "RightVerticalOdometer";
+    public static final String HORIZONTAL_ODOMETER_NAME = "HorizontalOdometer";
+
+    // drive system
+    public static final double DRIVE_SPEED_REDUCTION_DISTANCE_INCHES = 48;
+    public static final double DRIVE_MIN_REDUCED_SPEED = 0.1;
+    public static final double DRIVE_OFFSET_TOLERANCE_INCHES = 1;
+    public static final double DRIVE_OFFSET_TOLERANCE_DEGREES = 5;
+
+    //Odometry
+    public static final double ODOMETER_INCHES_TO_TICKS = 1102;
+    public static final double ODOMETER_TICKS_TO_INCHES = 1 / 1102;
+    public static final double TURN_CORRECTION_SPEED_MULTIPLIER = 1;
+    public static final double MAX_TURN_CORRECTION_SPEED = 0.1;
+    // can be calibrated further for precision
+    public static final double HORIZONTAL_ODOMETER_ROTATION_OFFSET_TICKS = 0.5;
+    public static final double VERTICAL_ODOMETER_TICKS_TO_RADIANS = 9212.34563283;
+
+    public static final double ODOMETER_DISTANCE_TO_CENTER = 4.405;
 }

@@ -1,15 +1,12 @@
 package teamcode.test.odometry;
 
-
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
+import teamcode.common.Debug;
 import teamcode.common.Point;
-import teamcode.test.odometry.CurvePoint;
+import teamcode.league3.GPS;
 import teamcode.test.odometry.MathFunctions;
 import teamcode.test.odometry.MovementVars;
-import teamcode.test.odometry.OdometryWheelsFinal;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,19 +23,20 @@ public class PurePursuitMovement {
     private static final double DISTANCE_TOLERANCE = 4;
     private static final double Y_POINT_TOLERANCE_INTERSECT = 0.003;
     private static final double X_POINT_TOLERANCE_INTERSECT = 0.003;
+    private static final double BRAKING_DISTANCE = 10;
 
-    private OdometryWheelsFinal wheels;
 
     private static String debugConglomerate = "";
     private double DISTANCE_TOLERANCE_X = 10;
     private  double DISTANCE_TOLERANCE_Y = 10;
+    private GPS gps ;
 
-    //private ArrayList<Point> visitedPoints = new ArrayList();
+    private ArrayList<Point> visitedPoints = new ArrayList();
     //private CurvePoint currentPoint;
     private CurvePoint previousFollowMe;
 
-    public PurePursuitMovement(OdometryWheelsFinal wheels){
-        this.wheels = wheels;
+    public PurePursuitMovement(GPS gps){
+        this.gps = gps;
     }
 
 
@@ -49,10 +47,11 @@ public class PurePursuitMovement {
             CurvePoint endLine = path.get(i + 1);
             //ArrayList<Point> intersections = getCircleLineIntersectionPoint(startLine.toPoint(), endLine.toPoint(),robotLocation,followRadius);
             ArrayList<Point> intersections = lineCircleIntersection(robotLocation, followRadius,startLine.toPoint(), endLine.toPoint());
+
             double closestAngle = 100000000;
             for(Point currentIntersection: intersections) {
-                double angle = atan2(currentIntersection.y - wheels.getGlobalRobotPosition().y, currentIntersection.x - wheels.getGlobalRobotPosition().x);
-                double deltaAngle = abs(MathFunctions.angleWrap(angle - wheels.getWorldAngleRads()));
+                double angle = atan2(currentIntersection.y - gps.getPosition().getY(), currentIntersection.x - gps.getPosition().getX());
+                double deltaAngle = abs(MathFunctions.angleWrap(angle - gps.getRotation()));
                 if(deltaAngle < closestAngle){
                     closestAngle = deltaAngle;
                     followMe.setPoint(currentIntersection);
@@ -91,7 +90,7 @@ public class PurePursuitMovement {
                 Point currentPoint = current.toPoint();
                 double slope = currentPoint.slope(nextPoint);
                 double perpendicularSlope = 1.0 / slope;
-                Point perpendicularPoint = new Point(wheels.getGlobalRobotPosition().x + 1, perpendicularSlope + wheels.getGlobalRobotPosition().y);
+                Point perpendicularPoint = new Point(gps.getPosition().getX() + 1, perpendicularSlope + gps.getPosition().getY());
             }else{
                 if(robotIsNearPoint(current)) {
                     return current.toPoint();
@@ -105,7 +104,7 @@ public class PurePursuitMovement {
 
     private boolean robotIsNearPoint(CurvePoint current) {
         Point currentPoint = current.toPoint();
-        return abs(currentPoint.x - wheels.getGlobalRobotPosition().x) < DISTANCE_TOLERANCE_X && abs(currentPoint.y - wheels.getGlobalRobotPosition().y) < DISTANCE_TOLERANCE_Y;
+        return sqrt(pow(currentPoint.x - gps.getPosition().getX(), 2) + pow(currentPoint.y - gps.getPosition().getY(), 2)) <= current.followDistance;
     }
 
     private boolean isLastPoint(ArrayList<CurvePoint> path, CurvePoint current){
@@ -119,25 +118,14 @@ public class PurePursuitMovement {
      * @param allPoints path the robot is pursuing
      * @param followAngle angle the robot should stick to in degrees
      */
-    public void followCurve(ArrayList<CurvePoint> allPoints, double followAngle) throws FileNotFoundException {
-
-        //for(int i = 0; i < allPoints.size() - 1; i++){
-            //ComputerDebugging.sendLine(new FloatPoint(allPoints.get(i).x, allPoints.get(i).y),new FloatPoint(allPoints.get(i+1).x, allPoints.get(i+1).y));
-        //}
+    public boolean followCurve(ArrayList<CurvePoint> allPoints, double followAngle) throws FileNotFoundException {
+        //simulated hardware GUI
+//        for(int i = 0; i < allPoints.size() - 1; i++){
+//            ComputerDebugging.sendLine(new FloatPoint(allPoints.get(i).x, allPoints.get(i).y),new FloatPoint(allPoints.get(i+1).x, allPoints.get(i+1).y));
+//        }
         Point secondToLastPoint = allPoints.get(allPoints.size() - 2).toPoint();
         Point lastPoint = allPoints.get(allPoints.size() - 1).toPoint();
-        Line lastLine;
-        if(secondToLastPoint.x < lastPoint.x){
-            lastLine = new Line(secondToLastPoint, lastPoint, true);
-        }else{
-            lastLine = new Line(secondToLastPoint, lastPoint, false);
-        }
-
-        double theta = lastLine.getAngleRads();
-
         //System.out.println(toDegrees(theta));
-        DISTANCE_TOLERANCE_X = allPoints.get(allPoints.size() - 1 ).followDistance * cos(theta);
-        DISTANCE_TOLERANCE_Y = allPoints.get(allPoints.size() - 1).followDistance * sin(theta);
         for(int i = 0; i < allPoints.size(); i++) {
             //System.out.println("X: " + Robot.worldXPosition);
             //System.out.println("Y: " + Robot.worldYPosition);
@@ -145,7 +133,7 @@ public class PurePursuitMovement {
             if(robotIsNearPoint(allPoints.get(allPoints.size() - 1))){
                 followMe = allPoints.get(allPoints.size() - 1);
             }else {
-                followMe = getFollowPointPath(allPoints, wheels.getGlobalRobotPosition(), allPoints.get(0).followDistance);
+                followMe = getFollowPointPath(allPoints, new Point(gps.getPosition().getX(), gps.getPosition().getY()), allPoints.get(0).followDistance);
             }
             goToPosition(followMe.x, followMe.y, followMe.moveSpeed, followAngle, followMe.turnSpeed);
             //assumes all followDistance is the same, gotta make a findPositionInPath method
@@ -158,11 +146,13 @@ public class PurePursuitMovement {
             if(robotIsNearPoint(getLastPoint(allPoints.get(allPoints.size() - 1).followDistance, allPoints))){
                 //need to find the actual position in the path to avoid ambiguity
                 brake();
+                return false;
             }
             //System.out.println("x: " + followMe.x);
             //System.out.println("y: " + followMe.y);
 
         }
+        return true;
     }
 
     public CurvePoint getLastPoint(double followRadius, ArrayList<CurvePoint> allPoints){
@@ -179,10 +169,10 @@ public class PurePursuitMovement {
         double cos = cos(theta);
         CurvePoint endPoint;
         if(lastLine.leftToRight) {
-            endPoint = new CurvePoint(lastPoint.x + followRadius * cos, lastPoint.y + followRadius * sin, allPoints.get(0).moveSpeed, allPoints.get(0).turnSpeed, allPoints.get(0).followDistance, allPoints.get(0).slowDownTurnRads, allPoints.get(0).slowDownTurnAmount);
+            endPoint = new CurvePoint(new CurvePoint(lastPoint.x + followRadius * cos, lastPoint.y + followRadius * sin, allPoints.get(0).moveSpeed, allPoints.get(0).turnSpeed, allPoints.get(0).followDistance, allPoints.get(0).slowDownTurnRads, allPoints.get(0).slowDownTurnAmount));
 
         }else{
-            endPoint = new CurvePoint(lastPoint.x - followRadius * cos, lastPoint.y - followRadius * sin, allPoints.get(0).moveSpeed, allPoints.get(0).turnSpeed, allPoints.get(0).followDistance, allPoints.get(0).slowDownTurnRads, allPoints.get(0).slowDownTurnAmount);
+            endPoint = new CurvePoint(new CurvePoint(lastPoint.x - followRadius * cos, lastPoint.y - followRadius * sin, allPoints.get(0).moveSpeed, allPoints.get(0).turnSpeed, allPoints.get(0).followDistance, allPoints.get(0).slowDownTurnRads, allPoints.get(0).slowDownTurnAmount));
         }
 
         return endPoint;
@@ -205,14 +195,14 @@ public class PurePursuitMovement {
         //preferredAngle += 45;
         preferredAngle = toRadians(preferredAngle);
 
-        double deltaX = x - wheels.getGlobalRobotPosition().x;
+        double deltaX = x - gps.getPosition().getX();
 
-        double deltaY = y - wheels.getGlobalRobotPosition().y;
+        double deltaY = y - gps.getPosition().getY();
         double distanceTravelled = hypot(deltaX, deltaY);
         //change in robots position throughout this function
         double absoluteAngle = atan2(deltaY, deltaX);
         //angle of motion
-        double relativeAngle = MathFunctions.angleWrap(absoluteAngle - (wheels.getWorldAngleRads() - Math.toRadians(90)));
+        double relativeAngle = MathFunctions.angleWrap(absoluteAngle - (gps.getRotation() - toRadians(90)));
         //change in angle
         //change in the robots position
         double relativeDistanceX = distanceTravelled * cos(relativeAngle);
@@ -235,8 +225,6 @@ public class PurePursuitMovement {
     }
 
 
-    int NaNCount = 0;
-    int notNaN = 0;
     private ArrayList<Point> lineCircleIntersection(Point circleCenter, double radius, Point linePoint1, Point linePoint2) throws FileNotFoundException {
         //(mx+b)^2 = r^2 + x^2
         //System.out.println(circleCenter.x);
@@ -265,16 +253,6 @@ public class PurePursuitMovement {
 
         ArrayList<Point> allPoints = new ArrayList();
         try{
-//            if(pow(b,2) - 4.0 * a * c < 0){
-//                NaNCount++;
-//                System.out.println("NaN: " + NaNCount);
-//                PrintStream ps = new PrintStream(new File("log2"));
-//                debugConglomerate += "center: " + circleCenter + "\n" + "radius: " + radius + "\n" + "" + "point1: " + linePoint1 + "\n" + "point2: " + linePoint2 + "\n" + "A: " + a + "\n" + "B: " + b + "\n" + "C: " + c + "\n";
-//                ps.print(debugConglomerate);
-//            }else{
-//                notNaN++;
-//                System.out.println("notNaN: " + notNaN);
-//            }
             double discriminant = sqrt((pow(b,2) - 4.0 * a * c));
             //System.out.println(discriminant);
             double xRoot1 = (-b + discriminant) / (2 *a);
@@ -288,7 +266,8 @@ public class PurePursuitMovement {
             yRoot1 += circleCenter.y;
             xRoot2 += circleCenter.x;
             yRoot2 += circleCenter.y;
-
+            Debug.log("Xroot1: " + xRoot1);
+            Debug.log("Xroot2: " + xRoot2);
             double minX = linePoint1.x < linePoint2.x ? linePoint1.x: linePoint2.x;
             double maxX = linePoint1.x > linePoint2.x ? linePoint1.x: linePoint2.x;
             //System.out.println(minX);
@@ -303,13 +282,7 @@ public class PurePursuitMovement {
             if(xRoot2 > minX && xRoot2 < maxX){
                 allPoints.add(new Point(xRoot2, yRoot2));
             }
-            if(allPoints.contains(new Point(0,0))){
-                //System.out.println("weird");
-                //System.out.println(allPoints.toString());
-                //System.out.println(xRoot1);
-                //System.out.println(discriminant);
-                //System.exit(69);
-            }
+
 
 
         }catch(ArithmeticException e){

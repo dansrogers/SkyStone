@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 import teamcode.common.AbstractOpMode;
 import teamcode.common.Point;
+import teamcode.common.Vector2D;
 import teamcode.league3.DriveSystem;
+import teamcode.league3.GPS;
 
 
 @Autonomous(name = "Pursuit Test")
@@ -19,7 +21,7 @@ public class PurePursuitSimpleTest extends AbstractOpMode {
 
     @Override
     protected void onInitialize() {
-        wheels = new OdometryWheelsFinal(this, new Point(100,100),0);
+       GPS gps = new GPS(this.hardwareMap, new Vector2D(24, 24), 0);
 
         driveSystem = new DriveSystem(AbstractOpMode.currentOpMode().hardwareMap, wheels);
         movement = new PurePursuitSimple(wheels, driveSystem);
@@ -28,14 +30,7 @@ public class PurePursuitSimpleTest extends AbstractOpMode {
 
     @Override
     protected void onStart() {
-        Thread odometerUpdate = new Thread(){
-            @Override
-            public void run(){
-                wheels.update();
 
-            }
-        };
-        odometerUpdate.start();
         path.add(new Point(100, 100));
         path.add(new Point(300,100));
         path.add(new Point(310, 100));

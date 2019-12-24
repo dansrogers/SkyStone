@@ -41,9 +41,8 @@ public final class Vector2D implements Cloneable {
         this.y = y;
     }
 
-    public void multiply(double scalar) {
-        x *= scalar;
-        y *= scalar;
+    public Vector2D multiply(double scalar) {
+        return new Vector2D(x * scalar, y * scalar);
     }
 
     public double magnitude() {
