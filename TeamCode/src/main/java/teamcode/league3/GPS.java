@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import teamcode.common.Utils;
 import teamcode.common.Vector2D;
+import teamcode.league3.REVExtensions2.ExpansionHubEx;
+import teamcode.league3.REVExtensions2.RevBulkData;
 
 /**
  * Always call shutdown() in onStop() of AbstractOpMode.
