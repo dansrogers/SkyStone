@@ -3,6 +3,7 @@ package teamcode.state;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import teamcode.common.Debug;
 import teamcode.common.Vector2D;
 
 /**
@@ -90,6 +91,9 @@ public class GPS {
         prevLeftVerticalPos = leftVerticalPos;
         prevRightVerticalPos = rightVerticalPos;
         prevHorizontalPos = horizontalPos;
+//        Debug.log("leftVertical: " + leftVerticalPos);
+//        Debug.log("rightVertical: " + rightVerticalPos);
+//        Debug.log("horizontal: " + horizontalPos);
     }
 
     /**

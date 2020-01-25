@@ -22,7 +22,7 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
     SkystonePos pos;
     Timer timer1;
     Timer timer2;
-    private final double SPEED = 0.6;
+    private final double SPEED = 1.0;
     @Override
     protected void onInitialize() {
         gps = new GPS(hardwareMap, new Vector2D(9, 38.5), 0);
@@ -42,7 +42,6 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
 
         if(pos == SkystonePos.LEFT){
             intakeStone(1, true);
-            arm.primeToScoreAUTO();
             scoreStone( true);
             intakeStone(4, false);
             scoreStone(false);
@@ -64,49 +63,43 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
 
     private void scoreStone( boolean pullFoundation) {
         if(pullFoundation){
-
-            drive.goTo(new Vector2D(30, 114), SPEED);
+            //y value at 122
+            drive.goTo(new Vector2D(30, 113), SPEED);
             drive.setRotation(Math.toRadians(180), SPEED);
 
-            drive.goTo(new Vector2D(40, 114), SPEED / 2.0);
+            drive.goTo(new Vector2D(41, 113), 0.3);
             arm.adjustFoundation();
             arm.scoreAUTO();
-            drive.goTo(new Vector2D(18, 114), SPEED);
-
+            //drive.goTo(new Vector2D(18, 114), SPEED);
+            drive.goTo(new Vector2D(36,96), SPEED);
             drive.setRotation(Math.toRadians(270), SPEED);
+            drive.goTo(new Vector2D(36,96), SPEED);
             arm.adjustFoundation();
         }else{
-            //drive.goTo(new Vector2D());
+            drive.goTo(new Vector2D(30, 113), SPEED);
+            arm.scoreAUTO();
         }
-        drive.goTo(new Vector2D(36, 96), SPEED);
-        drive.goTo(parkingSpot, SPEED);
+        //drive.goTo(new Vector2D(36, 96), SPEED);
+        //drive.goTo(parkingSpot, SPEED);
     }
 
     Vector2D parkingSpot = new Vector2D(36, 72);
 
-    private void intakeStone(int stoneNum, boolean isFirst) {
-        Debug.clear();
-        Debug.log("Intake Thread Before");
+    private void intakeStone(double stoneNum, boolean isFirst) {
 
-        new Thread(){
-            public void run(){
-                arm.suck(-1);
-                Utils.sleep(50);
-                Debug.log("Intake active");
-                arm.intakeSequence();
-
-            }
-        }.start();
-        Debug.log("intake thread after");
         if(stoneNum == 1){
+            intakeStone();
 //            drive.goTo(new Vector2D(24, 62), SPEED);
 //            drive.setRotation(Math.toRadians(-30), SPEED);
-            drive.goTo(new Vector2D(49, 51), 0.4);
+            //drive.goTo(new Vector2D(49, 51), 0.4);
+            drive.goTo(new Vector2D(49, 53), 0.4);
 
         }else{
             drive.goTo(new Vector2D(36, 37 - ((6 - stoneNum) - 2) * 8), SPEED);
-            drive.goTo(new Vector2D(57, 37 - ((6 - stoneNum) - 2) * 8), SPEED);
-            drive.goTo(new Vector2D(57, 37 - ((6 - stoneNum) - 1) * 8), SPEED);
+            drive.goTo(new Vector2D(58, 37 - ((6 - stoneNum) - 2) * 8), 0.8);
+            intakeStone();
+            drive.goTo(new Vector2D(58, 37 - ((6 - stoneNum) - 1.5) * 8), SPEED);
+
         }
 
         Utils.sleep(250);
@@ -114,6 +107,18 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
         if(isFirst) {
             drive.setRotation(Math.toRadians(90), SPEED);
         }
+
+    }
+    public void intakeStone(){
+        new Thread(){
+            public void run(){
+                arm.suck(-1);
+                Utils.sleep(50);
+                Debug.log("Intake active");
+                arm.intakeSequenceAUTO(4000);
+                arm.primeToScoreAUTO();
+            }
+        }.start();
 
     }
 

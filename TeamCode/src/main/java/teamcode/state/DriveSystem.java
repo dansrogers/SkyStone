@@ -14,6 +14,7 @@ import teamcode.common.Vector2D;
 
 public class DriveSystem {
 
+    //note to self, optimize for auto
     private static final double MIN_REDUCED_SPEED = 0.2;
     private static final double ACCELERATION_SPEED_REDUCTION_THRESHOLD_INCHES = 12;
     private static final double DECELERATION_SPEED_REDUCTION_THRESHOLD_INCHES = 48;

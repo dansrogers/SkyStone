@@ -13,10 +13,13 @@ import teamcode.common.Vector2D;
 
 public class MoonshotArmSystem {
 
-    private static final double INTAKE_POWER = 0.85;
+    private static final double INTAKE_POWER = 1;
     private static final double BOX_FLAT_POSITION = 0.5;
     private static final double BOX_RAMPED_POSITION = 0.37;
     private static final double BACK_GRABBER_OPEN_POSITION = 0.9;
+
+
+
     private static final double BACK_GRABBER_CLOSED_POSITION = 0.5;
     private static final double FRONT_GRABBER_OPEN_POSITION = 0.64;
     private static final double FRONT_GRABBER_INTAKE_POSITION = 0.84;
@@ -510,8 +513,7 @@ public class MoonshotArmSystem {
             Debug.log("right power:" + intakeRight.getPower());
         }
         Debug.log("after intaking");
-        suck(0);
-        boxTransfer.setPosition(BOX_FLAT_POSITION);
+        primeToScore();
     }
 
 
