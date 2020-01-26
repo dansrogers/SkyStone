@@ -1,5 +1,6 @@
 package teamcode.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -9,7 +10,7 @@ import teamcode.common.Debug;
 import teamcode.state.Constants;
 import teamcode.state.MoonshotArmSystem;
 
-
+@Disabled
 @TeleOp(name = "Lift Diagnostic")
 public class LiftDiagnostic extends AbstractOpMode {
 

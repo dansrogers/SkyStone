@@ -13,7 +13,7 @@ import teamcode.common.Utils;
 import teamcode.common.Vector2D;
 import teamcode.state.VisionOnInit.SkystonePos;
 
-@Autonomous(name="Blue auto")
+@Autonomous(name="Red auto")
 public class StateOptimizedAutoRed extends AbstractOpMode {
     DriveSystem drive;
     MoonshotArmSystem arm;

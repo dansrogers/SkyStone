@@ -1,11 +1,13 @@
 package teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import teamcode.common.AbstractOpMode;
 import teamcode.state.MoonshotArmSystem;
 
+@Disabled
 @TeleOp(name="LiftTest")
 public class LiftEncoderTest extends AbstractOpMode {
     private MoonshotArmSystem arm;
