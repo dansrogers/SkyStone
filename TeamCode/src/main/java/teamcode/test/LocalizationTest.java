@@ -1,5 +1,6 @@
 package teamcode.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import teamcode.common.AbstractOpMode;
@@ -7,7 +8,7 @@ import teamcode.common.Vector2D;
 import teamcode.state.DriveSystem;
 import teamcode.state.GPS;
 
-
+@Disabled
 @TeleOp(name= "Localizer Test")
 public class LocalizationTest extends AbstractOpMode {
 

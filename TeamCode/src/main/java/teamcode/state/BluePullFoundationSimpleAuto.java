@@ -1,11 +1,13 @@
 package teamcode.state;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import teamcode.common.AbstractOpMode;
 import teamcode.common.Utils;
 import teamcode.common.Vector2D;
 
+@Disabled
 @Autonomous(name = "Blue Pull Foundation Simple")
 public class BluePullFoundationSimpleAuto extends AbstractOpMode {
 

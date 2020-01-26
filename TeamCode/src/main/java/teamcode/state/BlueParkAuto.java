@@ -1,6 +1,7 @@
 package teamcode.state;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8,6 +9,7 @@ import java.util.TimerTask;
 import teamcode.common.AbstractOpMode;
 import teamcode.common.Vector2D;
 
+@Disabled
 @Autonomous(name = "Blue Park")
 public class BlueParkAuto extends AbstractOpMode {
 

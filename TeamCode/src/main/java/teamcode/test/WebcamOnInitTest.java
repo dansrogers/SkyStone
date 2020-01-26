@@ -7,7 +7,6 @@ import teamcode.common.AbstractOpMode;
 import teamcode.common.Debug;
 import teamcode.state.VisionOnInit;
 
-@Disabled
 @Autonomous(name = "Webcam Init")
 public class WebcamOnInitTest extends AbstractOpMode {
     public VisionOnInit webcam;

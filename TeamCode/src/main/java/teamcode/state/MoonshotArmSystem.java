@@ -21,7 +21,7 @@ public class MoonshotArmSystem {
 
 
     private static final double BACK_GRABBER_CLOSED_POSITION = 0.5;
-    private static final double FRONT_GRABBER_OPEN_POSITION = 0.63;
+    private static final double FRONT_GRABBER_OPEN_POSITION = 0.55;
     private static final double FRONT_GRABBER_INTAKE_POSITION = 0.84;
     private static final double FRONT_GRABBER_CLOSED_POSITION = 1;
     private static final double FOUNDATION_GRABBER_RIGHT_OPEN_POSITION = 0.6;
@@ -276,11 +276,17 @@ public class MoonshotArmSystem {
 
     public void attemptToAdjust() {
         pulley.setPosition(0.1);
-        frontGrabber.setPosition(0.6);
+        frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
         pulley.setPosition(0);
         Utils.sleep(100);
-        frontGrabber.setPosition(1);
+        frontGrabber.setPosition(FRONT_GRABBER_CLOSED_POSITION);
         pulley.setPosition(0.077 * 1.5);
+    }
+
+    public void reclamp() {
+        frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
+        pulley.setPosition(PULLEY_RETRACTED_POSITION);
+        primeToScore();
     }
 
     public void dumpStone() {
@@ -294,7 +300,7 @@ public class MoonshotArmSystem {
     }
 
     public void score() {
-        frontGrabber.setPosition(0.5);
+        frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
         pulley.setPosition(0.27);
         backGrabber.setPosition(0.9);
     }
@@ -312,7 +318,7 @@ public class MoonshotArmSystem {
         Utils.sleep(250);
         pulley.setPosition(0);
         Utils.sleep(1000);
-        frontGrabber.setPosition(0.63);
+        frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
     }
 
     public void resetArmPosition() {
@@ -320,7 +326,7 @@ public class MoonshotArmSystem {
         pulley.setPosition(0);
         backGrabber.setPosition(0.9);
         //Utils.sleep(1000);
-        frontGrabber.setPosition(0.63);
+        frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
     }
 
     public void liftContinuously(double power, boolean droop ) {

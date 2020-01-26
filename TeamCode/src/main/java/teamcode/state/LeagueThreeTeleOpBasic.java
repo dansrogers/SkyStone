@@ -1,5 +1,6 @@
 package teamcode.state;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.Timer;
@@ -9,7 +10,7 @@ import teamcode.common.AbstractOpMode;
 import teamcode.common.Debug;
 import teamcode.common.Vector2D;
 
-
+@Disabled
 @TeleOp(name = "Tele-Op")
 public class LeagueThreeTeleOpBasic extends AbstractOpMode {
 

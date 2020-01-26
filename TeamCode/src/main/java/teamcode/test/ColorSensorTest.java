@@ -1,12 +1,13 @@
 package teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import teamcode.common.AbstractOpMode;
 import teamcode.state.Constants;
 
-
+@Disabled
 @Autonomous(name = "colorSensorTest")
 public class ColorSensorTest extends AbstractOpMode {
 

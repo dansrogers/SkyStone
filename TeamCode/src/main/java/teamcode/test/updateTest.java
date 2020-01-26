@@ -1,11 +1,13 @@
 package teamcode.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import teamcode.common.AbstractOpMode;
 import teamcode.common.Vector2D;
 import teamcode.state.GPS;
 
+@Disabled
 @TeleOp(name="updateTest")
 public class updateTest extends AbstractOpMode {
     private GPS gps;
