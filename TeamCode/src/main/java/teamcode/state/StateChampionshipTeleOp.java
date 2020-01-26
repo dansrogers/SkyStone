@@ -16,9 +16,12 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
     private MoonshotArmSystem arm;
     private DriveSystem drive;
 
-    private double NORMAL_MODIFIER_ROTATIONAL = 0.5;
+    private boolean ENABLE_SPRINT_LINEAR = false;
+    private boolean ENABLE_SPRINT_ROTATIONAL = false;
+
+    private double NORMAL_MODIFIER_ROTATIONAL = 0.6;
     private double SPRINT_MODIFIER_ROTATIONAL = 0.75;
-    private double NORMAL_MODIFIER_LINEAR = 0.5;
+    private double NORMAL_MODIFIER_LINEAR = 1.0;
     private double SPRINT_MODIFIER_LINEAR = 1.0;
     private static final double TURN_SPEED_CORRECTION_MODIFIER = 0;
     private boolean canSnapUp;
@@ -194,7 +197,14 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
 
         if (driverOne) {
             turnSpeed = -gamepad1.left_stick_x;
-            velocity = new Vector2D(-gamepad1.right_stick_x, gamepad1.right_stick_y);
+            double x = gamepad1.right_stick_x;
+            if (gamepad1.right_stick_y == 0)
+            {
+                // strafing
+                x = x * 0.75;
+            }
+
+            velocity = new Vector2D(-x, gamepad1.right_stick_y);
             if (gamepad1.left_trigger > 0.3) {
                 velocity = velocity.multiply(SPRINT_MODIFIER_LINEAR);
                 turnSpeed *= SPRINT_MODIFIER_ROTATIONAL;

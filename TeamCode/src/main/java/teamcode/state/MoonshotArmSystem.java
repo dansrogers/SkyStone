@@ -31,7 +31,7 @@ public class MoonshotArmSystem {
 
 
     private static final double PULLEY_RETRACTED_POSITION = 0;
-    private static final double PULLEY_EXTENDED_POSITION = 0.33 - 0.0924;
+    private static final double PULLEY_EXTENDED_POSITION = 0.32076; //0.33-0.00924;
     private static final double PULLEY_PRIMED_POSITION = 0.0924;
 
     private static final double WINCH_MOTOR_INCHES_TO_TICKS = 1591.2;
@@ -284,10 +284,12 @@ public class MoonshotArmSystem {
     }
 
     public void dumpStone() {
+        backGrabber.setPosition(BACK_GRABBER_CLOSED_POSITION);
         frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
         pulley.setPosition(PULLEY_EXTENDED_POSITION);
         Utils.sleep(500);
         backGrabber.setPosition(BACK_GRABBER_OPEN_POSITION);
+        Utils.sleep(500);
         pulley.setPosition(PULLEY_RETRACTED_POSITION);
     }
 
