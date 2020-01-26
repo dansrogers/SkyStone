@@ -64,13 +64,13 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
     private void scoreStone( boolean pullFoundation) {
         if(pullFoundation){
             //y value at 122
-            drive.goTo(new Vector2D(36, 120), SPEED);
+            drive.goTo(new Vector2D(36, 109), SPEED);
             drive.setRotation(Math.toRadians(-180), SPEED);
 
-            drive.goTo(new Vector2D(41, 120), 0.3);
+            drive.goTo(new Vector2D(41, 109), 0.3);
             arm.adjustFoundation();
             arm.scoreAUTO();
-            drive.goTo(new Vector2D(36, 120), SPEED);
+            drive.goTo(new Vector2D(31, 109), SPEED);
             //drive.goTo(new Vector2D(18, 114), SPEED);
             //drive.goTo(new Vector2D(36,96), SPEED);
             drive.setRotation(Math.toRadians(-90), SPEED);
