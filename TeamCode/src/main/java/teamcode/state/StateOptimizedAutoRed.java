@@ -22,7 +22,7 @@ public class StateOptimizedAutoRed extends AbstractOpMode {
     SkystonePos pos;
     Timer timer1;
     Timer timer2;
-    private final double SPEED = 1.0;
+    private final double SPEED = 0.8;
     @Override
     protected void onInitialize() {
         gps = new GPS(hardwareMap, new Vector2D(-9, 36.5), Math.toRadians(180));
@@ -64,7 +64,7 @@ public class StateOptimizedAutoRed extends AbstractOpMode {
         if(pullFoundation){
             //y value at 122
             drive.goTo(new Vector2D(-35.5, 120), SPEED);
-            drive.setRotation(Math.toRadians(0), SPEED);
+            drive.setRotation(Math.toRadians(360), SPEED);
 
             drive.goTo(new Vector2D(-44, 120), 0.3);
             arm.adjustFoundation();
@@ -72,7 +72,7 @@ public class StateOptimizedAutoRed extends AbstractOpMode {
             drive.goTo(new Vector2D(-35, 98.5), SPEED);
             //drive.goTo(new Vector2D(18, 114), SPEED);
             //drive.goTo(new Vector2D(36,96), SPEED);
-            drive.setRotation(Math.toRadians(90), SPEED);
+            drive.setRotation(Math.toRadians(270), SPEED);
             //drive.setRotation(Math.toRadians(0), SPEED);
             drive.goTo(new Vector2D(-36,96), SPEED);
             arm.adjustFoundation();
