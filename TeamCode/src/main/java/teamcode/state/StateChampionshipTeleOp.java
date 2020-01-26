@@ -12,7 +12,7 @@ import teamcode.common.Vector2D;
 @TeleOp(name = "State Championship Tele Op")
 public class StateChampionshipTeleOp extends AbstractOpMode {
 
-    private static final double WINCH_MOTOR_POWER = 1.0;
+    private static final double WINCH_MOTOR_POWER = 0.85;
     private MoonshotArmSystem arm;
     private DriveSystem drive;
 
@@ -90,7 +90,7 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
             while (gamepad1.dpad_up) {
                 arm.liftContinuously(WINCH_MOTOR_POWER);
             }
-            arm.liftContinuously(0);
+            arm.liftContinuously( 0);
             //arm.snapBack(true);
 
         } else if (gamepad1.dpad_down) {

@@ -21,7 +21,7 @@ public class MoonshotArmSystem {
 
 
     private static final double BACK_GRABBER_CLOSED_POSITION = 0.5;
-    private static final double FRONT_GRABBER_OPEN_POSITION = 0.64;
+    private static final double FRONT_GRABBER_OPEN_POSITION = 0.63;
     private static final double FRONT_GRABBER_INTAKE_POSITION = 0.84;
     private static final double FRONT_GRABBER_CLOSED_POSITION = 1;
     private static final double FOUNDATION_GRABBER_RIGHT_OPEN_POSITION = 0.6;
@@ -31,7 +31,7 @@ public class MoonshotArmSystem {
 
 
     private static final double PULLEY_RETRACTED_POSITION = 0;
-    private static final double PULLEY_EXTENDED_POSITION = 0.33;
+    private static final double PULLEY_EXTENDED_POSITION = 0.33 - 0.0924;
     private static final double PULLEY_PRIMED_POSITION = 0.0924;
 
     private static final double WINCH_MOTOR_INCHES_TO_TICKS = 1591.2;
@@ -284,10 +284,10 @@ public class MoonshotArmSystem {
     }
 
     public void dumpStone() {
-        pulley.setPosition(PULLEY_EXTENDED_POSITION);
         frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
+        pulley.setPosition(PULLEY_EXTENDED_POSITION);
+        Utils.sleep(500);
         backGrabber.setPosition(BACK_GRABBER_OPEN_POSITION);
-        Utils.sleep(200);
         pulley.setPosition(PULLEY_RETRACTED_POSITION);
     }
 
@@ -298,10 +298,15 @@ public class MoonshotArmSystem {
     }
 
     public void reset() {
-        while (!localizer.isNearStart(liftEncoder.getCurrentPosition())) {
-            liftContinuously(-0.5);
-        }
-        liftContinuously(0);
+        new Thread(){
+            public void run(){
+                while (!localizer.isNearStart(liftEncoder.getCurrentPosition())) {
+                    liftContinuously(-0.5);
+                }
+                liftContinuously(0);
+            }
+        }.start();
+
         Utils.sleep(250);
         pulley.setPosition(0);
         Utils.sleep(1000);
@@ -526,10 +531,10 @@ public class MoonshotArmSystem {
 
     public void scoreAUTO() {
         pulley.setPosition(PULLEY_EXTENDED_POSITION);
-        Utils.sleep(1000);
+        Utils.sleep(500);
         frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
         backGrabber.setPosition(BACK_GRABBER_OPEN_POSITION);
-        Utils.sleep(1000);
+        Utils.sleep(500);
         pulley.setPosition(PULLEY_RETRACTED_POSITION);
     }
 
