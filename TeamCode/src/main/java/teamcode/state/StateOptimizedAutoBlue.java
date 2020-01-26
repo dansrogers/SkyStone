@@ -39,7 +39,6 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
 
     @Override
     protected void onStart() {
-
         if(pos == SkystonePos.LEFT){
             intakeStone(1, true);
             scoreStone( true);
@@ -64,20 +63,21 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
     private void scoreStone( boolean pullFoundation) {
         if(pullFoundation){
             //y value at 122
-            drive.goTo(new Vector2D(35, 109), SPEED);
+            drive.goTo(new Vector2D(35.5, 120), SPEED);
             drive.setRotation(Math.toRadians(-180), SPEED);
 
-            drive.goTo(new Vector2D(41, 109), 0.3);
+            drive.goTo(new Vector2D(44, 120), 0.3);
             arm.adjustFoundation();
             arm.scoreAUTO();
             drive.goTo(new Vector2D(35, 98.5), SPEED);
             //drive.goTo(new Vector2D(18, 114), SPEED);
             //drive.goTo(new Vector2D(36,96), SPEED);
             drive.setRotation(Math.toRadians(-90), SPEED);
+            //drive.setRotation(Math.toRadians(0), SPEED);
             drive.goTo(new Vector2D(36,96), SPEED);
             arm.adjustFoundation();
         }else{
-            drive.goTo(new Vector2D(32, 113), SPEED);
+            drive.goTo(new Vector2D(32, 111), SPEED);
             arm.scoreAUTO();
         }
         //drive.goTo(new Vector2D(36, 96), SPEED);
@@ -93,12 +93,19 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
 //            drive.goTo(new Vector2D(24, 62), SPEED);
 //            drive.setRotation(Math.toRadians(-30), SPEED);
             drive.goTo(new Vector2D(49, 52), 0.4);
+            intakeStone();
         } else {
             //10, half the robot +1
             double stoneNumToInch = Constants.STONE_LENGTH_INCHES * (7 - stoneNum) + 10;
+            if(stoneNum == 6){
+                stoneNumToInch = 20;
+            }
             double xValue = 50;
             if (!isFirst) {
                 xValue += 4;
+            }
+            if(stoneNum == 6){
+                xValue += 2;
             }
 
 //            drive.goTo(new Vector2D(36, 37 - ((6 - stoneNum) - 2) * 8), SPEED);
@@ -107,7 +114,9 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
 //            drive.goTo(new Vector2D(57, 37 - ((6 - stoneNum) - 1.5) * 8), SPEED);
 
             drive.goTo(new Vector2D(32, stoneNumToInch), SPEED);
-            drive.setRotation(Math.toRadians(-90), SPEED);
+            if (isFirst) {
+                drive.setRotation(Math.toRadians(-90), SPEED);
+            }
             drive.goTo(new Vector2D(xValue, stoneNumToInch), 0.8);
             intakeStone();
             drive.goTo(new Vector2D(xValue, stoneNumToInch - 6), SPEED);
@@ -126,7 +135,7 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
                 arm.suck(-1);
                 Utils.sleep(50);
                 Debug.log("Intake active");
-                arm.intakeSequenceAUTO(3000);
+                arm.intakeSequenceAUTO(800);
                 arm.primeToScoreAUTO();
             }
         }.start();
@@ -134,7 +143,7 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
     }
 
     private void park(){
-        drive.goTo(parkingSpot, SPEED);
+        drive.goTo(new Vector2D(41, 72), SPEED);
     }
 
     @Override

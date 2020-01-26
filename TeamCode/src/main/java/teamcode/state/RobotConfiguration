@@ -10,7 +10,7 @@ Expansion Hub 1:
 
     Servo:
         0. Name: BoxTransfer Type: Servo
-        1. Name: CapstoneServo Type: Servo
+        1. Name: Type:
         2. Name: RightFoundationGrabber  Type: Servo
         3. Name:  Type:
         4. Name:  Type:
@@ -44,7 +44,7 @@ Expansion Hub 2:
         1. Name:  Type:
         2. Name: Pulley Type: Servo
         3. Name:  Type:
-        4. Name: RightFoundationGrabber (NOTE: DO NOT USE)  Type: Servo
+        4. Name:  Type:
         5. Name: BackGrabber Type: Servo
     Digital Device:
 

@@ -146,7 +146,7 @@ public class MoonshotArmSystem {
     private void resetServos() {
         foundationGrabberLeft.setPosition(FOUNDATION_GRABBER_LEFT_OPEN_POSITION);
         foundationGrabberRight.setPosition(FOUNDATION_GRABBER_RIGHT_OPEN_POSITION);
-        boxTransfer.setPosition(BOX_FLAT_POSITION);
+        boxTransfer.setPosition(BOX_RAMPED_POSITION);
         backGrabber.setPosition(BACK_GRABBER_OPEN_POSITION);
         frontGrabber.setPosition(FRONT_GRABBER_CLOSED_POSITION);
         pulley.setPosition(PULLEY_RETRACTED_POSITION);

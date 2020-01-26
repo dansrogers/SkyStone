@@ -36,6 +36,7 @@ public class VisionOnInit {
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
 
+
     public enum SkystonePos {
         LEFT, CENTER, RIGHT;
     }
