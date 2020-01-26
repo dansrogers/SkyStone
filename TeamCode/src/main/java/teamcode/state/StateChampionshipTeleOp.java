@@ -89,7 +89,7 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
             arm.intakeSequence();
         } else if (gamepad1.right_stick_button) {
             arm.extend();
-        } else if (gamepad1.dpad_up && !gamepad1.dpad_right) {
+        } else if (gamepad1.dpad_up) {
             while (gamepad1.dpad_up) {
                 arm.liftContinuously(WINCH_MOTOR_POWER);
             }
@@ -106,15 +106,18 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
             arm.score();
         } else if (gamepad1.a) {
             arm.reset();
+        } else if(gamepad1.dpad_right){
+
         } else if (gamepad1.dpad_left) {
-            while(gamepad1.dpad_left) {
-                arm.liftContinuously(0.69);
+
+        } else if (gamepad1.left_bumper) {
+            while(gamepad1.left_bumper){
+                arm.fastDroop();
             }
             arm.liftContinuously(0);
-            // free button
-        } else if (gamepad1.left_bumper) {
-            while(gamepad1.left_bumper) {
-                arm.liftContinuously(0, true);
+        } else if (gamepad1.left_trigger > 0){
+            while(gamepad1.left_trigger > 0) {
+                arm.liftContinuously(0.69);
             }
             arm.liftContinuously(0);
         } else if (gamepad1.y) {
@@ -133,12 +136,6 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
         }
         if (!gamepad1.right_bumper) {
             rbDown = false;
-        }
-        if(gamepad1.dpad_right && !gamepad1.dpad_up){
-            while(gamepad1.dpad_right){
-                arm.fastDroop();
-            }
-            arm.liftContinuously(0);
         }
         if(gamepad2.b){
             arm.score();
@@ -205,13 +202,8 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
             }
 
             velocity = new Vector2D(-x, gamepad1.right_stick_y);
-            if (gamepad1.left_trigger > 0.3) {
-                velocity = velocity.multiply(SPRINT_MODIFIER_LINEAR);
-                turnSpeed *= SPRINT_MODIFIER_ROTATIONAL;
-            } else {
-                velocity = velocity.multiply(NORMAL_MODIFIER_LINEAR);
-                turnSpeed *= NORMAL_MODIFIER_ROTATIONAL;
-            }
+            velocity = velocity.multiply(NORMAL_MODIFIER_LINEAR);
+            turnSpeed *= NORMAL_MODIFIER_ROTATIONAL;
 
             turnSpeed += TURN_SPEED_CORRECTION_MODIFIER * velocity.magnitude();
             drive.continuous(velocity, turnSpeed);
