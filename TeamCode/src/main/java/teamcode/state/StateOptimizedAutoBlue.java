@@ -70,14 +70,14 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
             drive.goTo(new Vector2D(41, 109), 0.3);
             arm.adjustFoundation();
             arm.scoreAUTO();
-            drive.goTo(new Vector2D(31, 109), SPEED);
+            drive.goTo(new Vector2D(35, 98.5), SPEED);
             //drive.goTo(new Vector2D(18, 114), SPEED);
             //drive.goTo(new Vector2D(36,96), SPEED);
             drive.setRotation(Math.toRadians(-90), SPEED);
             drive.goTo(new Vector2D(36,96), SPEED);
             arm.adjustFoundation();
         }else{
-            drive.goTo(new Vector2D(30, 113), SPEED);
+            drive.goTo(new Vector2D(32, 113), SPEED);
             arm.scoreAUTO();
         }
         //drive.goTo(new Vector2D(36, 96), SPEED);
