@@ -134,7 +134,7 @@ public class DriveSystem {
      */
     public void goTo(Vector2D targetPosition, double speed) {
         speed = Math.abs(speed);
-
+        Debug.log(targetPosition);
         double totalDistance = targetPosition.subtract(this.targetPosition).magnitude();
         double cancelTimeSeconds = totalDistance / speed / INCHES_PER_SECOND + ACCELERATION_BUFFER_SECONDS;
         boolean[] cancel = {false};

@@ -64,16 +64,16 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
     private void scoreStone( boolean pullFoundation) {
         if(pullFoundation){
             //y value at 122
-            drive.goTo(new Vector2D(30, 113), SPEED);
-            drive.setRotation(Math.toRadians(180), SPEED);
+            drive.goTo(new Vector2D(36, 120), SPEED);
+            drive.setRotation(Math.toRadians(-180), SPEED);
 
-            drive.goTo(new Vector2D(41, 113), 0.3);
+            drive.goTo(new Vector2D(41, 120), 0.3);
             arm.adjustFoundation();
             arm.scoreAUTO();
-            drive.goTo(new Vector2D(36, 113), SPEED);
+            drive.goTo(new Vector2D(36, 120), SPEED);
             //drive.goTo(new Vector2D(18, 114), SPEED);
             //drive.goTo(new Vector2D(36,96), SPEED);
-            drive.setRotation(Math.toRadians(270), SPEED);
+            drive.setRotation(Math.toRadians(-90), SPEED);
             drive.goTo(new Vector2D(36,96), SPEED);
             arm.adjustFoundation();
         }else{
@@ -96,23 +96,28 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
         } else {
             //10, half the robot +1
             double stoneNumToInch = Constants.STONE_LENGTH_INCHES * (7 - stoneNum) + 10;
+            double xValue = 50;
+            if (!isFirst) {
+                xValue += 4;
+            }
+
 //            drive.goTo(new Vector2D(36, 37 - ((6 - stoneNum) - 2) * 8), SPEED);
 //            drive.goTo(new Vector2D(57, 37 - ((6 - stoneNum) - 2) * 8), 0.8);
 //            intakeStone();
 //            drive.goTo(new Vector2D(57, 37 - ((6 - stoneNum) - 1.5) * 8), SPEED);
-            drive.goTo(new Vector2D(36, stoneNumToInch), SPEED);
-            drive.goTo(new Vector2D(57, stoneNumToInch), 0.8);
-            if(isFirst) {
-                drive.setRotation(Math.toRadians(90), SPEED);
-            }
+
+            drive.goTo(new Vector2D(32, stoneNumToInch), SPEED);
+            drive.setRotation(Math.toRadians(-90), SPEED);
+            drive.goTo(new Vector2D(xValue, stoneNumToInch), 0.8);
             intakeStone();
-            drive.goTo(new Vector2D(57, stoneNumToInch - 4), SPEED);
+            drive.goTo(new Vector2D(xValue, stoneNumToInch - 6), SPEED);
         }
 
         //Utils.sleep(250);
         drive.goTo(new Vector2D(36, 48), SPEED);
-
-
+        if(stoneNum == 1){
+            drive.setRotation(Math.toRadians(-90), SPEED);
+        }
     }
 
     public void intakeStone(){

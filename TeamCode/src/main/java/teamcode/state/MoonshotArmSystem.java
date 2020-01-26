@@ -513,13 +513,13 @@ public class MoonshotArmSystem {
         frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
         backGrabber.setPosition(BACK_GRABBER_OPEN_POSITION);
         intaking = true;
-        Debug.log("pre sucking");
+        //Debug.log("pre sucking");
         while (intaking && AbstractOpMode.currentOpMode().opModeIsActive() && System.currentTimeMillis() - currentTime < timeoutMillis){
-            Debug.log("sucking");
-            Debug.log("left power:" + intakeLeft.getPower());
-            Debug.log("right power:" + intakeRight.getPower());
+            //Debug.log("sucking");
+            //Debug.log("left power:" + intakeLeft.getPower());
+            //Debug.log("right power:" + intakeRight.getPower());
         }
-        Debug.log("after intaking");
+        //Debug.log("after intaking");
         primeToScore();
     }
 
