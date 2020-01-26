@@ -64,7 +64,7 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
     private void scoreStone( boolean pullFoundation) {
         if(pullFoundation){
             //y value at 122
-            drive.goTo(new Vector2D(36, 109), SPEED);
+            drive.goTo(new Vector2D(35, 109), SPEED);
             drive.setRotation(Math.toRadians(-180), SPEED);
 
             drive.goTo(new Vector2D(41, 109), 0.3);
@@ -126,7 +126,7 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
                 arm.suck(-1);
                 Utils.sleep(50);
                 Debug.log("Intake active");
-                arm.intakeSequenceAUTO(4000);
+                arm.intakeSequenceAUTO(3000);
                 arm.primeToScoreAUTO();
             }
         }.start();
