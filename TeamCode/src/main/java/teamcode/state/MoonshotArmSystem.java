@@ -283,6 +283,12 @@ public class MoonshotArmSystem {
         pulley.setPosition(0.077 * 1.5);
     }
 
+    public void reclamp() {
+        frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
+        pulley.setPosition(PULLEY_RETRACTED_POSITION);
+        primeToScore();
+    }
+
     public void dumpStone() {
         backGrabber.setPosition(BACK_GRABBER_CLOSED_POSITION);
         frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);

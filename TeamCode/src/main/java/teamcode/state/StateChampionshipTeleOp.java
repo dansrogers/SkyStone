@@ -108,7 +108,7 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
         } else if(gamepad1.dpad_right){
 
         } else if (gamepad1.dpad_left) {
-
+            arm.reclamp();
         } else if (gamepad1.left_bumper) {
             while(gamepad1.left_bumper){
                 arm.fastDroop();
