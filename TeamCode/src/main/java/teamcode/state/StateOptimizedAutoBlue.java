@@ -77,7 +77,7 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
             drive.goTo(new Vector2D(36,96), SPEED);
             arm.adjustFoundation();
         }else{
-            drive.goTo(new Vector2D(24, 113), SPEED);
+            drive.goTo(new Vector2D(30, 113), SPEED);
             arm.scoreAUTO();
         }
         //drive.goTo(new Vector2D(36, 96), SPEED);
