@@ -101,7 +101,6 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
                 arm.liftContinuously(-0.2);
             }
             arm.liftContinuously(0);
-
         } else if (gamepad1.x) {
             arm.score();
         } else if (gamepad1.a) {

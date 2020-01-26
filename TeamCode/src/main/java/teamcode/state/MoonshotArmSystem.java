@@ -56,7 +56,7 @@ public class MoonshotArmSystem {
     private Servo foundationGrabberLeft, foundationGrabberRight;
     private Servo backGrabber, frontGrabber;
     //private Servo capstoneServo;
-    private ColorSensor intakeSensor;
+    //private ColorSensor intakeSensor;
 
     private int targetWinchPositionTicks = 0;
     private boolean intaking;
@@ -74,7 +74,7 @@ public class MoonshotArmSystem {
         frontGrabber = hardwareMap.get(Servo.class, Constants.FRONT_GRABBER);
         pulley = hardwareMap.get(Servo.class, Constants.PULLEY_SERVO);
         //capstoneServo = hardwareMap.get(Servo.class, Constants.CAPSTONE_SERVO);
-        intakeSensor = hardwareMap.get(ColorSensor.class, Constants.INTAKE_COLOR_SENSOR);
+        //intakeSensor = hardwareMap.get(ColorSensor.class, Constants.INTAKE_COLOR_SENSOR);
         //liftSensor = hardwareMap.get(TouchSensor.class, Constants.LIFT_TOUCH_SENSOR);
         foundationGrabberState = FoundationGrabberState.OPEN;
         localizer = new LiftLocalizer();
@@ -216,7 +216,7 @@ public class MoonshotArmSystem {
         backGrabber.setPosition(BACK_GRABBER_OPEN_POSITION);
         intaking = true;
         Debug.log("ENTERING suck loop");
-        while (!intakeFull() && AbstractOpMode.currentOpMode().opModeIsActive()) {
+        while (AbstractOpMode.currentOpMode().opModeIsActive()) {
             if (!intaking) {
                 suck(0);
                 // this means cancelIntakeSequence() has been called.
@@ -447,10 +447,10 @@ public class MoonshotArmSystem {
     }
 
 
-    private boolean intakeFull() {
-        int green = intakeSensor.green();
-        return green > 900;
-    }
+//    private boolean intakeFull() {
+//        int green = intakeSensor.green();
+//        return green > 900;
+//    }
 
 
     public void capstoneScoring() {
@@ -514,7 +514,7 @@ public class MoonshotArmSystem {
         backGrabber.setPosition(BACK_GRABBER_OPEN_POSITION);
         intaking = true;
         Debug.log("pre sucking");
-        while (!intakeFull() && intaking && AbstractOpMode.currentOpMode().opModeIsActive() && System.currentTimeMillis() - currentTime < timeoutMillis){
+        while (intaking && AbstractOpMode.currentOpMode().opModeIsActive() && System.currentTimeMillis() - currentTime < timeoutMillis){
             Debug.log("sucking");
             Debug.log("left power:" + intakeLeft.getPower());
             Debug.log("right power:" + intakeRight.getPower());
