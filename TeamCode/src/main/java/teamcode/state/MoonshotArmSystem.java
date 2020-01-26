@@ -533,10 +533,10 @@ public class MoonshotArmSystem {
 
     public void scoreAUTO() {
         pulley.setPosition(PULLEY_EXTENDED_POSITION);
-        Utils.sleep(500);
+        Utils.sleep(250);
         frontGrabber.setPosition(FRONT_GRABBER_OPEN_POSITION);
         backGrabber.setPosition(BACK_GRABBER_OPEN_POSITION);
-        Utils.sleep(500);
+        Utils.sleep(350);
         pulley.setPosition(PULLEY_RETRACTED_POSITION);
     }
 
