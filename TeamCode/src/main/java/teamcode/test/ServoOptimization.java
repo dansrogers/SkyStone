@@ -1,6 +1,7 @@
 package teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -9,7 +10,7 @@ import teamcode.common.Debug;
 import teamcode.common.Utils;
 import teamcode.state.Constants;
 
-
+@Disabled
 @TeleOp(name = "ServoOptimization")
 public class ServoOptimization extends AbstractOpMode {
 

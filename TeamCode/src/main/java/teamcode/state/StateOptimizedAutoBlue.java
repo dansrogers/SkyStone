@@ -22,7 +22,7 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
     SkystonePos pos;
     Timer timer1;
     Timer timer2;
-    private final double SPEED = 1.0;
+    private final double SPEED = 0.8;
     @Override
     protected void onInitialize() {
         gps = new GPS(hardwareMap, new Vector2D(9, 38.5), 0);
@@ -40,9 +40,9 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
     @Override
     protected void onStart() {
         if(pos == SkystonePos.LEFT){
-            intakeStone(1, true);
+            intakeStone(4, true);
             scoreStone( true);
-            intakeStone(4, false);
+            intakeStone(5, false);
             scoreStone(false);
             park();
         }else if(pos == SkystonePos.CENTER){
@@ -93,8 +93,7 @@ public class StateOptimizedAutoBlue extends AbstractOpMode {
 //            drive.goTo(new Vector2D(24, 62), SPEED);
 //            drive.setRotation(Math.toRadians(-30), SPEED);
             drive.goTo(new Vector2D(49, 52), 0.4);
-            intakeStone();
-        } else {
+         } else {
             //10, half the robot +1
             double stoneNumToInch = Constants.STONE_LENGTH_INCHES * (7 - stoneNum) + 10;
             if(stoneNum == 6){

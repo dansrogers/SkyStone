@@ -21,14 +21,14 @@ public class DriveSystem {
     private static final double ACCELERATION_TURN_SPEED_REDUCTION_THRESHOLD_RADIANS = Math.toRadians(75);
     private static final double DECELERATION_TURN_SPEED_REDUCTION_THRESHOLD_RADIANS = Math.toRadians(115);
 
-    private static final double LINEAR_OFFSET_TOLERANCE_INCHES = 2;
+    private static final double LINEAR_OFFSET_TOLERANCE_INCHES = 1.5;
     private static final double ROTATIONAL_OFFSET_TOLERANCE_RADIANS = Math.toRadians(3);
     /**
      * Used to determine when goTo should be cancelled in the event the robot becomes stuck.
      */
     private static final double INCHES_PER_SECOND = 40;
     private static final double ACCELERATION_BUFFER_SECONDS = 2;
-    private static final double EMERGENCY_STOP_THRESHOLD_RADIANS = Math.toRadians(15);
+    private static final double EMERGENCY_STOP_THRESHOLD_RADIANS = Math.toRadians(8);
 
     private static final double TURN_CORRECTION_SPEED_MULTIPLIER = 1.5;
     private static final double LATERAL_MOVEMENT_POWER_MULTIPLIER = 2;

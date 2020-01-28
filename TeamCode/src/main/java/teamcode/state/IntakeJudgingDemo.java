@@ -1,5 +1,6 @@
 package teamcode.state;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.Timer;
@@ -7,10 +8,10 @@ import java.util.TimerTask;
 
 import teamcode.common.AbstractOpMode;
 import teamcode.common.Debug;
-import teamcode.common.Vector2D;
 
-@TeleOp(name = "State Championship Tele Op")
-public class StateChampionshipTeleOp extends AbstractOpMode {
+@Disabled
+@TeleOp(name = "Demo")
+public class IntakeJudgingDemo extends AbstractOpMode {
 
     private static final double WINCH_MOTOR_POWER = 0.85;
     private MoonshotArmSystem arm;
@@ -29,7 +30,7 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
     Timer snapDownCooldown;
     private boolean canSnapDown;
 
-    Thread driveUpdate;
+    //Thread driveUpdate;
     Thread armUpdate;
 
     private boolean flipDriveControls = false;
@@ -48,14 +49,14 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
     @Override
     protected void onStart() {
         arm = new MoonshotArmSystem(hardwareMap);
-        driveUpdate = new Thread() {
-            @Override
-            public void run() {
-                while (opModeIsActive()) {
-                    driveUpdate();
-                }
-            }
-        };
+//        driveUpdate = new Thread() {
+//            @Override
+//            public void run() {
+//                while (opModeIsActive()) {
+//                    driveUpdate();
+//                }
+//            }
+//        };
         armUpdate = new Thread() {
             @Override
             public void run() {
@@ -72,7 +73,7 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
             }
         };
         arm.initCapstoneServo();
-        driveUpdate.start();
+        //driveUpdate.start();
         armUpdate.start();
         cancelUpdate.start();
         while (opModeIsActive()) ;
@@ -86,7 +87,6 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
 
     private void armUpdate() {
         if (gamepad1.right_trigger > 0.3) {
-
             arm.intakeSequence();
         } else if (gamepad1.right_stick_button) {
             arm.extend();
@@ -155,12 +155,6 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
         if(gamepad2.y){
             arm.retract();
         }
-        if(gamepad2.left_bumper){
-            while(gamepad2.left_bumper){
-                arm.suck(-1);
-            }
-            arm.suck(0);
-        }
 
 
         if (gamepad2.a) {
@@ -194,41 +188,41 @@ public class StateChampionshipTeleOp extends AbstractOpMode {
     private final double NORMAL_MODIFIER_LINEAR_DRIVER_TWO = 0.25;
     private final double NORMAL_MODIFIER_ROTATIONAL_DRIVER_TWO = 0.3;
 
-    private void driveUpdate() {
-        double turnSpeed;
-        Vector2D velocity;
-
-        if (driverOne) {
-            turnSpeed = -gamepad1.left_stick_x;
-            double x = gamepad1.right_stick_x;
-            if (gamepad1.right_stick_y == 0)
-            {
-                // strafing
-                x = x * 0.75;
-            }
-
-            velocity = new Vector2D(-x, gamepad1.right_stick_y);
-            velocity = velocity.multiply(NORMAL_MODIFIER_LINEAR);
-            turnSpeed *= NORMAL_MODIFIER_ROTATIONAL;
-
-            turnSpeed += TURN_SPEED_CORRECTION_MODIFIER * velocity.magnitude();
-            drive.continuous(velocity, turnSpeed);
-        } else {
-            turnSpeed = -gamepad2.left_stick_x;
-            velocity = new Vector2D(-gamepad2.right_stick_x, gamepad2.right_stick_y);
-            if (gamepad2.left_trigger > 0.3) {
-                velocity = velocity.multiply(SPRINT_MODIFIER_LINEAR_DRIVER_TWO);
-                turnSpeed *= SPRINT_MODIFIER_ROTATIONAL_DRIVER_TWO;
-            } else {
-                velocity = velocity.multiply(NORMAL_MODIFIER_LINEAR_DRIVER_TWO);
-                turnSpeed *= NORMAL_MODIFIER_ROTATIONAL_DRIVER_TWO;
-            }
-
-
-            turnSpeed += TURN_SPEED_CORRECTION_MODIFIER * velocity.magnitude();
-            drive.continuous(velocity, turnSpeed);
-        }
-    }
+//    private void driveUpdate() {
+//        double turnSpeed;
+//        Vector2D velocity;
+//
+//        if (driverOne) {
+//            turnSpeed = -gamepad1.left_stick_x;
+//            double x = gamepad1.right_stick_x;
+//            if (gamepad1.right_stick_y == 0)
+//            {
+//                // strafing
+//                x = x * 0.75;
+//            }
+//
+//            velocity = new Vector2D(-x, gamepad1.right_stick_y);
+//            velocity = velocity.multiply(NORMAL_MODIFIER_LINEAR);
+//            turnSpeed *= NORMAL_MODIFIER_ROTATIONAL;
+//
+//            turnSpeed += TURN_SPEED_CORRECTION_MODIFIER * velocity.magnitude();
+//            drive.continuous(velocity, turnSpeed);
+//        } else {
+//            turnSpeed = -gamepad2.left_stick_x;
+//            velocity = new Vector2D(-gamepad2.right_stick_x, gamepad2.right_stick_y);
+//            if (gamepad2.left_trigger > 0.3) {
+//                velocity = velocity.multiply(SPRINT_MODIFIER_LINEAR_DRIVER_TWO);
+//                turnSpeed *= SPRINT_MODIFIER_ROTATIONAL_DRIVER_TWO;
+//            } else {
+//                velocity = velocity.multiply(NORMAL_MODIFIER_LINEAR_DRIVER_TWO);
+//                turnSpeed *= NORMAL_MODIFIER_ROTATIONAL_DRIVER_TWO;
+//            }
+//
+//
+//            turnSpeed += TURN_SPEED_CORRECTION_MODIFIER * velocity.magnitude();
+//            drive.continuous(velocity, turnSpeed);
+//        }
+//    }
 
     @Override
     protected void onStop() {

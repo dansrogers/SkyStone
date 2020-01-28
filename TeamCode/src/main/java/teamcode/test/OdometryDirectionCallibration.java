@@ -1,6 +1,7 @@
 package teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import teamcode.common.AbstractOpMode;
@@ -9,6 +10,7 @@ import teamcode.state.Constants;
 /**
  * Use to ensure that all odometers are working and running in the expected direction.
  */
+@Disabled
 @Autonomous(name = "Odometry Direction Callibration")
 public class OdometryDirectionCallibration extends AbstractOpMode {
 
