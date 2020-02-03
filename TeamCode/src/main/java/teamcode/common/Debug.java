@@ -27,7 +27,6 @@ public class Debug {
     }
 
     private Debug() {
-        // Brian why would you instantiate Debug?
     }
 
     public static synchronized void log(Object message) {
