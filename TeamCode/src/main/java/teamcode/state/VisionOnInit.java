@@ -263,7 +263,6 @@ public class VisionOnInit {
 //        Debug.log("black/yellow L: " + blackCountL + "/" + yellowCountL);
 //        Debug.log("black/yellow C: " + blackCountC + "/" + yellowCountC);
 //        Debug.log("black/yellow R: " + blackCountR + "/" + yellowCountR);
-
         return pos;
     }
 }
