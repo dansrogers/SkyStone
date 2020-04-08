@@ -11,12 +11,27 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import teamcode.common.AbstractOpMode;
 import teamcode.test.AdvancedOdometry.Point;
 
+interface IMU {
+        Acceleration getAcceleration();
+        Velocity getVelocity();
+        Position getPosition();
+        AngularVelocity getAngularVelocity();
+        Orientation getAngularOrientation();
+}
+
+class RealIMU implements IMU {
+    
+}
+
+class FakeIMU implements IMU {
+}
+
 public class imuUpdater {
 
     RobotState currentState;
 
-    BNO055IMU imu;
-    public imuUpdater(BNO055IMU imu){
+    IMU imu;
+    public imuUpdater(IMU imu){
         this.imu = imu;
         currentState = new RobotState(System.currentTimeMillis(), new Point(0,0), new Point(0,0), 0.0, 0.0, new Point(0.,0), 0);
         new Thread(){
